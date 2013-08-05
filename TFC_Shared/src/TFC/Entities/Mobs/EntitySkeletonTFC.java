@@ -21,6 +21,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProviderHell;
 import TFC.TFCItems;
+import TFC.Core.TFC_Settings;
 import TFC.Entities.EntityArrowTFC;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -117,7 +118,7 @@ public class EntitySkeletonTFC extends EntitySkeleton
     @Override
     protected int getDropItemId()
     {
-        return Item.arrow.itemID;
+        return TFC_Settings.SkeletonArrowID;
     }
 
     /**
@@ -144,7 +145,7 @@ public class EntitySkeletonTFC extends EntitySkeleton
 
             for (var4 = 0; var4 < var3; ++var4)
             {
-                this.dropItem(Item.arrow.itemID, 1);
+                this.dropItem(TFC_Settings.SkeletonArrowID, 1);
             }
         }
 
@@ -167,9 +168,9 @@ public class EntitySkeletonTFC extends EntitySkeleton
     protected void addRandomArmor()
     {
     	superAddRandomArmor();
-        this.setCurrentItemOrArmor(0, new ItemStack(Item.itemsList[Item.bow.itemID]));
+        this.setCurrentItemOrArmor(0, new ItemStack(Item.itemsList[TFC_Settings.SkeletonBowID]));
     }
-    
+      
     public static Item getArmorItemForSlot(int par0, int par1)
     {
         switch (par0)
