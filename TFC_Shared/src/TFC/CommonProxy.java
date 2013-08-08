@@ -33,6 +33,7 @@ import TFC.Containers.ContainerVessel;
 import TFC.Containers.ContainerWorkbench;
 import TFC.Core.Player.PlayerInfo;
 import TFC.Core.Player.PlayerManagerTFC;
+import TFC.Entities.EntityAdvancedArrowTFC;
 import TFC.Entities.EntityArrowTFC;
 import TFC.Entities.EntityCustomMinecart;
 import TFC.Entities.EntityFallingDirt;
@@ -165,6 +166,7 @@ public class CommonProxy implements IGuiHandler
 		EntityRegistry.registerGlobalEntityID(EntityIronGolemTFC.class, "irongolem", ModLoader.getUniqueEntityId(), 0xffffff, 0x105510);
 		EntityRegistry.registerGlobalEntityID(EntityCreeperTFC.class, "Creeper", ModLoader.getUniqueEntityId(), 0xffffff, 0x105510);
 		EntityRegistry.registerGlobalEntityID(EntityArrowTFC.class, "arrow", ModLoader.getUniqueEntityId());
+		EntityRegistry.registerGlobalEntityID(EntityAdvancedArrowTFC.class, "arrow", ModLoader.getUniqueEntityId());
 
 		EntityRegistry.registerModEntity(EntityTerraJavelin.class, "javelin", 1,TerraFirmaCraft.instance, 160, 5, true);
 		EntityRegistry.registerModEntity(EntitySquidTFC.class, "squid", 2,TerraFirmaCraft.instance, 160, 5, true);

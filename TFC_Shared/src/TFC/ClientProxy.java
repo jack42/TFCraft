@@ -31,6 +31,7 @@ import TFC.Core.TFC_Climate;
 import TFC.Core.TFC_Time;
 import TFC.Core.Player.PlayerManagerTFC;
 import TFC.Core.Util.StringUtil;
+import TFC.Entities.EntityAdvancedArrowTFC;
 import TFC.Entities.EntityArrowTFC;
 import TFC.Entities.EntityCustomMinecart;
 import TFC.Entities.EntityStand;
@@ -175,6 +176,7 @@ public class ClientProxy extends CommonProxy
 		//RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayerTFC());
 
 		RenderingRegistry.registerEntityRenderingHandler(EntityArrowTFC.class, new RenderArrow());
+		RenderingRegistry.registerEntityRenderingHandler(EntityAdvancedArrowTFC.class, new RenderArrow());
 
 		RenderingRegistry.registerBlockHandler(TFCBlocks.clayGrassRenderId = RenderingRegistry.getNextAvailableRenderId(), new BlockRenderHandler());
 		RenderingRegistry.registerBlockHandler(TFCBlocks.peatGrassRenderId = RenderingRegistry.getNextAvailableRenderId(), new BlockRenderHandler());

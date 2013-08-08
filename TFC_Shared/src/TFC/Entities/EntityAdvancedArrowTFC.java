@@ -19,8 +19,9 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import TFC.API.ICausesDamage;
 import TFC.API.Enums.EnumDamageType;
+import TFC.Core.TFC_Settings;
 
-public class EntityArrowTFC extends EntityArrow implements ICausesDamage
+public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
 {
     private int xTile = -1;
     private int yTile = -1;
@@ -28,6 +29,7 @@ public class EntityArrowTFC extends EntityArrow implements ICausesDamage
     private int inTile = 0;
     private int inData = 0;
     private boolean inGround = false;
+    private int itemId = TFC_Settings.SkeletonArrowID;
 
     /** 1 if the player can pick up the arrow */
     public int canBePickedUp = 0;
@@ -42,13 +44,13 @@ public class EntityArrowTFC extends EntityArrow implements ICausesDamage
     /** The amount of knockback an arrow applies when it hits a mob. */
     private int knockbackStrength;
 
-    public EntityArrowTFC(World par1World)
+    public EntityAdvancedArrowTFC(World par1World)
     {
         super(par1World);
         this.setDamage(65.0);
     }
 
-    public EntityArrowTFC(World par1World, double par2, double par4, double par6)
+    public EntityAdvancedArrowTFC(World par1World, double par2, double par4, double par6)
     {
         this(par1World);
         this.setSize(0.5F, 0.5F);
@@ -56,11 +58,12 @@ public class EntityArrowTFC extends EntityArrow implements ICausesDamage
         this.yOffset = 0.0F;
     }
 
-    public EntityArrowTFC(World par1World, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5)
+    public EntityAdvancedArrowTFC(World par1World, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5, int itemId)
     {
         this(par1World);
         this.shootingEntity = par2EntityLiving;
-
+        this.itemId = itemId;
+        
         if (par2EntityLiving instanceof EntityPlayer)
         {
             this.canBePickedUp = 1;
@@ -85,11 +88,12 @@ public class EntityArrowTFC extends EntityArrow implements ICausesDamage
         }
     }
 
-    public EntityArrowTFC(World par1World, EntityLiving par2EntityLiving, float par3)
+    public EntityAdvancedArrowTFC(World par1World, EntityLiving par2EntityLiving, float par3, int itemId)
     {
         this(par1World);
         this.shootingEntity = par2EntityLiving;
-
+        this.itemId = itemId;
+        
         if (par2EntityLiving instanceof EntityPlayer)
         {
             this.canBePickedUp = 1;
@@ -110,10 +114,10 @@ public class EntityArrowTFC extends EntityArrow implements ICausesDamage
 
 
     /**
-* Called to update the entity's position/logic.
-*/
+     * Called to update the entity's position/logic.
+     */
     @Override
-public void onUpdate()
+	public void onUpdate()
     {
         super.onUpdate();
 
@@ -355,34 +359,39 @@ public void onUpdate()
     }
 
     /**
-* (abstract) Protected helper method to write subclass entity data to NBT.
-*/
+     * (abstract) Protected helper method to write subclass entity data to NBT.
+     */
     @Override
-public void writeEntityToNBT(NBTTagCompound nbt)
+	public void writeEntityToNBT(NBTTagCompound nbt)
     {
-     super.writeEntityToNBT(nbt);
+    	super.writeEntityToNBT(nbt);
+    	nbt.setInteger("itemId", this.itemId);
     }
 
     /**
-* (abstract) Protected helper method to read subclass entity data from NBT.
-*/
+     * (abstract) Protected helper method to read subclass entity data from NBT.
+     */
     @Override
-public void readEntityFromNBT(NBTTagCompound nbt)
+	public void readEntityFromNBT(NBTTagCompound nbt)
     {
-     super.readEntityFromNBT(nbt);
+    	super.readEntityFromNBT(nbt);
+    	if (nbt.hasKey("itemId")) 
+    	{
+    		this.itemId = nbt.getInteger("itemId");
+    	}
     }
 
     /**
-* Called by a player entity when they collide with an entity
-*/
+     * Called by a player entity when they collide with an entity
+     */
     @Override
-public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
+	public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
     {
         if (!this.worldObj.isRemote && this.inGround && this.arrowShake <= 0)
         {
             boolean var2 = this.canBePickedUp == 1 || this.canBePickedUp == 2 && par1EntityPlayer.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.arrow, 1)))
+            if (this.canBePickedUp == 1 && !par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(itemId, 1, 0)))
             {
                 var2 = false;
             }
@@ -396,8 +405,8 @@ public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
         }
     }
 
-@Override
-public EnumDamageType GetDamageType() {
-return EnumDamageType.PIERCING;
-}
+	@Override
+	public EnumDamageType GetDamageType() {
+		return EnumDamageType.PIERCING;
+	}
 }

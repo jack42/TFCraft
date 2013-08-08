@@ -1,9 +1,12 @@
 package TFC.Items.Tools;
 
+import java.util.Arrays;
+
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
@@ -11,11 +14,13 @@ import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
+import net.minecraftforge.event.entity.player.ArrowNockEvent;
+import TFC.TFCItems;
 import TFC.API.ISize;
 import TFC.API.TFCTabs;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
-import TFC.Entities.EntityArrowTFC;
+import TFC.Entities.EntityAdvancedArrowTFC;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -49,7 +54,9 @@ public class ItemCustomBow extends ItemBow implements ISize
 
         boolean flag = par3EntityPlayer.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, par1ItemStack) > 0;
 
-        if (flag || par3EntityPlayer.inventory.hasItem(Item.arrow.itemID))
+        int arrowId = getArrowId(par3EntityPlayer.inventory);
+        
+        if (flag || arrowId > 0)
         {
             float f = j / 20.0F;
             f = (f * f + f * 2.0F) / 3.0F;
@@ -64,7 +71,7 @@ public class ItemCustomBow extends ItemBow implements ISize
                 f = 1.0F;
             }
 
-            EntityArrowTFC entityarrow = new EntityArrowTFC(par2World, par3EntityPlayer, f * 2.0F);
+            EntityAdvancedArrowTFC entityarrow = new EntityAdvancedArrowTFC(par2World, par3EntityPlayer, f * 2.0F, arrowId);
 
             if (f == 1.0F)
             {
@@ -99,7 +106,7 @@ public class ItemCustomBow extends ItemBow implements ISize
             }
             else
             {
-                par3EntityPlayer.inventory.consumeInventoryItem(Item.arrow.itemID);
+                par3EntityPlayer.inventory.consumeInventoryItem(arrowId);
             }
 
             if (!par2World.isRemote)
@@ -109,6 +116,26 @@ public class ItemCustomBow extends ItemBow implements ISize
         }
     }
 
+    /**
+     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
+     */
+    public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+        ArrowNockEvent event = new ArrowNockEvent(par3EntityPlayer, par1ItemStack);
+        MinecraftForge.EVENT_BUS.post(event);
+        if (event.isCanceled())
+        {
+            return event.result;
+        }
+
+        if (par3EntityPlayer.capabilities.isCreativeMode || getArrowId(par3EntityPlayer.inventory)> 0)
+        {
+            par3EntityPlayer.setItemInUse(par1ItemStack, this.getMaxItemUseDuration(par1ItemStack));
+        }
+
+        return par1ItemStack;
+    }    
+    
     @Override
 	@SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister par1IconRegister)
@@ -141,5 +168,24 @@ public class ItemCustomBow extends ItemBow implements ISize
 	public boolean canStack() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	private int getArrowId(InventoryPlayer inventory)
+	{
+        for (int j = 0; j < inventory.mainInventory.length; ++j)
+        {
+            if (inventory.mainInventory[j] != null)
+            {
+            	int id = inventory.mainInventory[j].itemID;
+            	for (int i = 0; i < TFCItems.Arrows.length; i++)
+            	{
+            		if (TFCItems.Arrows[i].itemID == id)
+            		{
+            			return id;
+            		}
+            	}
+            }
+        }
+        return -1;
 	}
 }

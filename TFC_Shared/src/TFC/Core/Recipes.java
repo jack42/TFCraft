@@ -45,10 +45,6 @@ public class Recipes
 				TFCItems.RoseGoldIngot,TFCItems.SilverIngot,TFCItems.SteelIngot,TFCItems.SterlingSilverIngot
 				,TFCItems.TinIngot,TFCItems.ZincIngot};
 
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.arrow, 8), new Object[] { 
-			new ItemStack(TFCItems.LooseRock, 1, 32767), new ItemStack(Item.stick,1,32767),
-			new ItemStack(Item.feather,1,32767)});
-		
 		//stone javelins
 		GameRegistry.addRecipe(new ItemStack(TFCItems.IgInStoneJavelin, 1, 0), new Object[] { 
 			"1","2", Character.valueOf('1'), TFCItems.IgInStoneJavelinHead,Character.valueOf('2'), new ItemStack(Item.stick,1,32767)});
@@ -157,6 +153,13 @@ public class Recipes
 				"2","1", Character.valueOf('1'), new ItemStack(TFCItems.SheepSkin,1),Character.valueOf('2'),new ItemStack(Knives[j],1,32767)});
 			GameRegistry.addRecipe(new ItemStack(TFCItems.TerraLeather,0,0), new Object[] {				
 				"2","1", Character.valueOf('1'), new ItemStack(TFCItems.TerraLeather,1),Character.valueOf('2'),new ItemStack(Knives[j],1,32767)});
+			if (TFC_Settings.enableTFCArcheryRecipes)
+			{
+				GameRegistry.addRecipe(new ItemStack(TFCItems.Fletching, 8, 0), new Object[] { 
+					"2","1", Character.valueOf('1'),new ItemStack(Item.feather,1), Character.valueOf('2'),new ItemStack(Knives[j], 1, 32767)});
+				GameRegistry.addRecipe(new ItemStack(TFCItems.Fletching, 1, 0), new Object[] { 
+					"2","1", Character.valueOf('1'),new ItemStack(TFCItems.CrackedArrow,1), Character.valueOf('2'),new ItemStack(Knives[j], 1, 32767)});
+			}
 		}
 
 		GameRegistry.addRecipe(new ItemStack(Item.itemFrame,1),new Object[]{"###","#$#","###",Character.valueOf('#'),new ItemStack(Item.stick,1),Character.valueOf('$'),new ItemStack(TFCItems.TerraLeather,1)});
@@ -227,10 +230,16 @@ public class Recipes
 				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 2), new Object[] {new ItemStack(TFCItems.LooseRock, 1, Global.STONE_FLUXINDEX[i]), new ItemStack(Recipes.Hammers[j], 1, 32767)});
 			}
 			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 6), new Object[] {new ItemStack(TFCItems.OreChunk, 1, 32), new ItemStack(Recipes.Hammers[j], 1, 32767)});
+			if (TFC_Settings.enableTFCArcheryRecipes)
+			{
+				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.GlassArrowHead, 8), new Object[] {new ItemStack(Block.glass, 1, 32), new ItemStack(Recipes.Hammers[j], 1, 32767)});
+			}
 		}
 		
-		GameRegistry.addRecipe(new ItemStack(Item.bow,1), new Object[] {" #$","# $"," #$",Character.valueOf('#'),new ItemStack(Item.stick,1),Character.valueOf('$'),new ItemStack(TFCItems.WoolYarn,1)});
-		GameRegistry.addRecipe(new ItemStack(Item.bow,1), new Object[] {"$# ","$ #","$# ",Character.valueOf('#'),new ItemStack(Item.stick,1),Character.valueOf('$'),new ItemStack(TFCItems.WoolYarn,1)});
+		if (TFC_Settings.enableTFCArcheryRecipes) {
+			GameRegistry.addRecipe(new ItemStack(Item.bow,1), new Object[] {" #$","# $"," #$",Character.valueOf('#'),new ItemStack(Item.stick,1),Character.valueOf('$'),new ItemStack(TFCItems.WoolYarn,1)});
+			GameRegistry.addRecipe(new ItemStack(Item.bow,1), new Object[] {"$# ","$ #","$# ",Character.valueOf('#'),new ItemStack(Item.stick,1),Character.valueOf('$'),new ItemStack(TFCItems.WoolYarn,1)});
+		}
 		
 		//Tool Rack & Barrel
 		for(int j = 0; j < 16; j++)
