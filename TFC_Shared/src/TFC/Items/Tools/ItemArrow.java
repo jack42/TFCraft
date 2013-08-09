@@ -60,7 +60,7 @@ public class ItemArrow extends ItemTerra implements ISize {
 
 	@Override
 	public EnumSize getSize() {
-		return EnumSize.SMALL;
+		return EnumSize.MEDIUM;
 	}
 
 	@Override

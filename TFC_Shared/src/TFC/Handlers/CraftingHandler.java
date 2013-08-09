@@ -8,6 +8,7 @@ import TFC.TFCBlocks;
 import TFC.TFCItems;
 import TFC.TerraFirmaCraft;
 import TFC.Core.Recipes;
+import TFC.Core.TFC_Settings;
 import TFC.Core.Player.PlayerInfo;
 import TFC.Core.Player.PlayerManagerTFC;
 import TFC.Food.ItemTerraFood;
@@ -46,9 +47,37 @@ public class CraftingHandler implements ICraftingHandler
 				HandleItem(entityplayer, iinventory, Recipes.Saws);
 				HandleItem(entityplayer, iinventory, Recipes.Axes);
 			}
+			if (itemstack.itemID == TFCItems.BoneArrowHead.itemID)
+			{
+				HandleItem(entityplayer, iinventory, Recipes.Knives);
+				if (itemstack.getItemDamage() == 0)
+				{
+					if (!entityplayer.worldObj.isRemote) {
+						entityplayer.dropItem(TFCItems.Fletching.itemID, 1);
+					}
+				} else
+				{
+					itemstack.setItemDamage(0);
+				}
+			}
+			else if (itemstack.itemID == TFCItems.GlassArrowHead.itemID
+				|| itemstack.itemID == TFCItems.StoneArrowHead.itemID || itemstack.itemID == TFCItems.TinArrowHead.itemID
+				|| itemstack.itemID == TFCItems.BismuthArrowHead.itemID || itemstack.itemID == TFCItems.ZincArrowHead.itemID
+				|| itemstack.itemID == TFCItems.CopperArrowHead.itemID || itemstack.itemID == TFCItems.BronzeArrowHead.itemID
+				|| itemstack.itemID == TFCItems.BismuthBronzeArrowHead.itemID || itemstack.itemID == TFCItems.RoseGoldArrowHead.itemID
+				|| itemstack.itemID == TFCItems.BlackBronzeArrowHead.itemID || itemstack.itemID == TFCItems.WroughtIronArrowHead.itemID
+				|| itemstack.itemID == TFCItems.SteelArrowHead.itemID || itemstack.itemID == TFCItems.BlackSteelArrowHead.itemID
+				|| itemstack.itemID == TFCItems.BlueSteelArrowHead.itemID || itemstack.itemID == TFCItems.RedSteelArrowHead.itemID)
+			{
+				HandleItem(entityplayer, iinventory, Recipes.Knives);
+				if (!entityplayer.worldObj.isRemote) {
+					entityplayer.dropItem(TFCItems.Fletching.itemID, 1);
+				}
+			}
 			else if(itemstack.itemID == Item.bowlEmpty.itemID || 
 					itemstack.getItem() instanceof ItemTerraFood || itemstack.itemID == TFCItems.ScrapedHide.itemID
-					|| itemstack.itemID == TFCItems.Wool.itemID||itemstack.itemID == TFCItems.TerraLeather.itemID)
+					|| itemstack.itemID == TFCItems.Wool.itemID||itemstack.itemID == TFCItems.TerraLeather.itemID
+					|| itemstack.itemID == TFCItems.Fletching.itemID || itemstack.itemID == TFCItems.WoddenArrow.itemID)
 			{
 				HandleItem(entityplayer, iinventory, Recipes.Knives);
 				if (itemstack.itemID == TFCItems.Wool.itemID && !entityplayer.worldObj.isRemote){
@@ -89,7 +118,7 @@ public class CraftingHandler implements ICraftingHandler
 			{
 				HandleItem(entityplayer,iinventory,Recipes.Spindle);
 			}
-			else if(itemstack.itemID == TFCItems.Flux.itemID)
+			else if(itemstack.itemID == TFCItems.Flux.itemID || itemstack.itemID == TFCItems.GlassArrowHead.itemID)
 			{
 				HandleItem(entityplayer, iinventory, Recipes.Hammers);
 			}

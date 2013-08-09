@@ -63,6 +63,7 @@ import TFC.Items.Pottery.ItemPotteryMold;
 import TFC.Items.Pottery.ItemPotteryPot;
 import TFC.Items.Pottery.ItemPotterySmallVessel;
 import TFC.Items.Tools.ItemArrow;
+import TFC.Items.Tools.ItemArrowHead;
 import TFC.Items.Tools.ItemChisel;
 import TFC.Items.Tools.ItemCustomAxe;
 import TFC.Items.Tools.ItemCustomBlueSteelBucket;
@@ -430,6 +431,7 @@ public class TFCItems
     public static Item KnifePlan;
     public static Item BucketPlan;
     public static Item JavelinHeadPlan;
+    public static Item ArrowHeadPlan;
 
     //Tool Heads
     public static Item BismuthPickaxeHead;
@@ -951,6 +953,7 @@ public class TFCItems
     public static Item ClayMoldShovel;
     public static Item ClayMoldSword;
     public static Item ClayMoldJavelin;
+    public static Item ClayMoldArrow;
     
     public static Item TuyereCopper;
     public static Item TuyereBronze;
@@ -1788,6 +1791,8 @@ public class TFCItems
         		"Ceramic Mold Sword Copper","Ceramic Mold Sword Bronze","Ceramic Mold Sword Bismuth Bronze","Ceramic Mold Sword Black Bronze"}).setUnlocalizedName("Sword Mold");
         ClayMoldJavelin = new ItemPotteryMold(TFC_Settings.getIntFor(config,"item","ClayMoldJavelin",num++)).setMetaNames(new String[]{"Clay Mold Javelin","Ceramic Mold Javelin",
         		"Ceramic Mold Javelin Copper","Ceramic Mold Javelin Bronze","Ceramic Mold Javelin Bismuth Bronze","Ceramic Mold Javelin Black Bronze"}).setUnlocalizedName("Javelin Mold");
+        ClayMoldArrow = new ItemPotteryMold(TFC_Settings.getIntFor(config,"item","ClayMoldArrow",num++)).setMetaNames(new String[]{"Clay Mold Arrow","Ceramic Mold Arrow",
+        		"Ceramic Mold Arrow Copper","Ceramic Mold Arrow Bronze","Ceramic Mold Arrow Bismuth Bronze","Ceramic Mold Arrow Black Bronze"}).setUnlocalizedName("Arrow Mold");
 		
         TuyereCopper = new ItemTuyere(TFC_Settings.getIntFor(config,"item","TuyereCopper",num++), 40, 0).setUnlocalizedName("Copper Tuyere");
         TuyereBronze = new ItemTuyere(TFC_Settings.getIntFor(config,"item","TuyereBronze",num++), 80, 1).setUnlocalizedName("Bronze Tuyere");
@@ -2009,6 +2014,7 @@ public class TFCItems
         KnifePlan = new ItemPlan(TFC_Settings.getIntFor(config,"item","KnifePlan",num)).setUnlocalizedName("KnifePlan");num++;
         BucketPlan = new ItemPlan(TFC_Settings.getIntFor(config,"item","BucketPlan",num)).setUnlocalizedName("BucketPlan");num++;
         JavelinHeadPlan = new ItemPlan(TFC_Settings.getIntFor(config,"item","JavelinHeadPlan",num)).setUnlocalizedName("JavelinHeadPlan");num++;
+        ArrowHeadPlan = new ItemPlan(TFC_Settings.getIntFor(config, "item", "ArrowHeadPlan", num)).setUnlocalizedName("Arrow Head Plan");num++;
     }
      
     public static void SetupFood(int num)
@@ -2248,22 +2254,22 @@ public class TFCItems
     
     public static void SetupArchery(int num)
     {
-    	BoneArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BoneArrowHead",num++)).setUnlocalizedName("Bone Arrow Head");
-    	GlassArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","GlassArrowHead",num++)).setUnlocalizedName("Glass Arrow Head");
-    	StoneArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","StoneArrowHead",num++)).setUnlocalizedName("Stone Arrow Head");
-    	TinArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","TinArrowHead",num++)).setUnlocalizedName("Tin Arrow Head");
-    	BismuthArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BismuthArrowHead",num++)).setUnlocalizedName("Bismuth Arrow Head");
-    	ZincArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","ZincArrowHead",num++)).setUnlocalizedName("Zinc Arrow Head");
-    	CopperArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","CopperArrowHead",num++)).setUnlocalizedName("Copper Arrow Head");
-    	BronzeArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BronzeArrowHead",num++)).setUnlocalizedName("Bronze Arrow Head");
-    	BismuthBronzeArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BismuthBronzeArrowHead",num++)).setUnlocalizedName("Bismuth Bronze Arrow Head");
-    	RoseGoldArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","RoseGoldArrowHead",num++)).setUnlocalizedName("Rose Gold Arrow Head");
-    	BlackBronzeArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BlackBronzeArrowHead",num++)).setUnlocalizedName("Black Bronze Arrow Head");
-    	WroughtIronArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","WroughtIronArrowHead",num++)).setUnlocalizedName("Wrought Iron Arrow Head");
-    	SteelArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","SteelArrowHead",num++)).setUnlocalizedName("Steel Arrow Head");
-    	BlackSteelArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BlackSteelArrowHead",num++)).setUnlocalizedName("Black Steel Arrow Head");
-    	RedSteelArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","RedSteelArrowHead",num++)).setUnlocalizedName("Red Steel Arrow Head");
-    	BlueSteelArrowHead = new ItemMiscToolHead(TFC_Settings.getIntFor(config,"item","BlueSteelArrowHead",num++)).setUnlocalizedName("Blue Steel Arrow Head");
+    	BoneArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BoneArrowHead",num++)).setUnlocalizedName("Bone Arrow Head");
+    	GlassArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","GlassArrowHead",num++)).setUnlocalizedName("Glass Arrow Head");
+    	StoneArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","StoneArrowHead",num++)).setUnlocalizedName("Stone Arrow Head");
+    	TinArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","TinArrowHead",num++)).setUnlocalizedName("Tin Arrow Head");
+    	BismuthArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BismuthArrowHead",num++)).setUnlocalizedName("Bismuth Arrow Head");
+    	ZincArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","ZincArrowHead",num++)).setUnlocalizedName("Zinc Arrow Head");
+    	CopperArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","CopperArrowHead",num++)).setUnlocalizedName("Copper Arrow Head");
+    	BronzeArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BronzeArrowHead",num++)).setUnlocalizedName("Bronze Arrow Head");
+    	BismuthBronzeArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BismuthBronzeArrowHead",num++)).setUnlocalizedName("Bismuth Bronze Arrow Head");
+    	RoseGoldArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","RoseGoldArrowHead",num++)).setUnlocalizedName("Rose Gold Arrow Head");
+    	BlackBronzeArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BlackBronzeArrowHead",num++)).setUnlocalizedName("Black Bronze Arrow Head");
+    	WroughtIronArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","WroughtIronArrowHead",num++)).setUnlocalizedName("Wrought Iron Arrow Head");
+    	SteelArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","SteelArrowHead",num++)).setUnlocalizedName("Steel Arrow Head");
+    	BlackSteelArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BlackSteelArrowHead",num++)).setUnlocalizedName("Black Steel Arrow Head");
+    	RedSteelArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","RedSteelArrowHead",num++)).setUnlocalizedName("Red Steel Arrow Head");
+    	BlueSteelArrowHead = new ItemArrowHead(TFC_Settings.getIntFor(config,"item","BlueSteelArrowHead",num++)).setUnlocalizedName("Blue Steel Arrow Head");
 
     	WoddenArrow = new ItemArrow(TFC_Settings.getIntFor(config,"item","WoddenArrow",num++), 7, 0, 0).setUnlocalizedName("Wodden Arrow");
     	BoneArrow = new ItemArrow(TFC_Settings.getIntFor(config,"item","BoneArrow",num++), 8, 40, TFCItems.BoneArrowHead.itemID).setUnlocalizedName("Bone Arrow");
@@ -2287,7 +2293,7 @@ public class TFCItems
     	CrackedArrow = new ItemTerra(TFC_Settings.getIntFor(config,"item","CrackedArrow",num++)).setUnlocalizedName("Cracked Arrow");   	
     	Arrows = new Item[] {WoddenArrow, BoneArrow, StoneArrow, GlassArrow, TinArrow, BismuthArrow, ZincArrow, 
     			CopperArrow, BronzeArrow, BismuthBronzeArrow, BlackBronzeArrow, RoseGoldArrow, WroughtIronArrow,
-    			SteelArrow, BlackSteelArrow, RedSteelArrow, BlueSteelArrow};    	
+    			SteelArrow, BlackSteelArrow, RedSteelArrow, BlueSteelArrow};
     }
     
     public static Item[] Meals;
