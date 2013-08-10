@@ -82,7 +82,7 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 				dos.writeLong(world.getSeed());
 				dos.writeLong(TFC_Time.dayLength);
 				dos.writeInt(TFC_Time.daysInYear);
-				
+
 				dos.writeFloat(foodstats.foodLevel);
 				dos.writeFloat(foodstats.waterLevel);
 
@@ -133,8 +133,9 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 					if(world != null && world.isRemote)
 					{
 						INetworkTE te = (INetworkTE) world.getBlockTileEntity(x, y, z);
-						if(te!= null)
+						if(te!= null) {
 							te.handleInitPacket(dis);
+						}
 					}
 				}catch(Exception e)
 				{
@@ -182,7 +183,9 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 						{
 							PlayerInfo pi = PlayerManagerTFC.getInstance().getPlayerInfoFromPlayer(player);
 
-							if(pi!=null) pi.switchChiselMode();
+							if(pi!=null) {
+								pi.switchChiselMode();
+							}
 						}
 					} 
 					catch (IOException e) 
@@ -224,8 +227,9 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 					z = dis.readInt();
 
 					INetworkTE te = (INetworkTE) world.getBlockTileEntity(x, y, z);
-					if(te!= null)
+					if(te!= null) {
 						te.handleDataPacket(dis);
+					}
 				}
 			}
 			else if(type == Packet_Data_Block_Server)
@@ -237,8 +241,9 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 					z = dis.readInt();
 
 					INetworkTE te = (INetworkTE) world.getBlockTileEntity(x, y, z);
-					if(te!= null)
+					if(te!= null) {
 						te.handleDataPacketServer(dis, player);
+					}
 				}
 			}
 			else if (type == Packet_Player_Status)
@@ -326,7 +331,7 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 			}
 			else if (type == Packet_Update_Knapping)
 			{
-				
+
 				if(!world.isRemote)
 				{
 					if(player.openContainer != null && player.openContainer instanceof ContainerSpecialCrafting)
@@ -340,7 +345,7 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 			//This is commented out for being incorrect. This functionality can be performed without a separate packet.
 			/*else if (type == Packet_Scribe_Update)
 			{
-				
+
 				if(!world.isRemote){
 					System.out.println("?");
 					int X = dis.readInt();
@@ -360,8 +365,9 @@ public class PacketHandler implements IPacketHandler, IConnectionHandler {
 	@SideOnly(Side.CLIENT)
 	public static void sendKeyPress(int type) //0 = chiselmode
 	{
-		if (!ModLoader.getMinecraftInstance().theWorld.isRemote) return;
-		else 
+		if (!ModLoader.getMinecraftInstance().theWorld.isRemote) {
+			return;
+		} else 
 		{
 			try
 			{
