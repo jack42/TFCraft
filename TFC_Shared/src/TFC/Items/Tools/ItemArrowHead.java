@@ -7,6 +7,7 @@ public class ItemArrowHead extends ItemMiscToolHead {
 
 	public ItemArrowHead(int i) {
 		super(i);
+        this.setFolder("archery/");
         this.setMaxDamage(0);
 	}
 	

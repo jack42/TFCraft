@@ -6,7 +6,6 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
@@ -19,10 +18,11 @@ import TFC.API.TFCTabs;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
 import TFC.Entities.EntityAdvancedArrowTFC;
+import TFC.Items.ItemTerra;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemCustomBow extends ItemBow implements ISize
+public class ItemCustomBow extends ItemTerra implements ISize
 {  
     public static final String[] bowPullIconNameArray = new String[] {"pulling_0", "pulling_1", "pulling_2"};
     @SideOnly(Side.CLIENT)
@@ -33,6 +33,7 @@ public class ItemCustomBow extends ItemBow implements ISize
         super(par1);
         this.maxStackSize = 1;
         this.setMaxDamage(384);
+        this.setFolder("archery/");
         setCreativeTab(TFCTabs.TFCTools);
     }
     
@@ -131,7 +132,55 @@ public class ItemCustomBow extends ItemBow implements ISize
         }
 
         return par1ItemStack;
+    }
+    
+    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+    {
+        return par1ItemStack;
+    }
+
+    /**
+     * How long it takes to use or consume an item
+     */
+    public int getMaxItemUseDuration(ItemStack par1ItemStack)
+    {
+        return 72000;
+    }
+
+    /**
+     * returns the action that specifies what animation to play when the items is being used
+     */
+    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    {
+        return EnumAction.bow;
     }    
+    
+    /**
+     * Player, Render pass, and item usage sensitive version of getIconIndex.
+     *
+     * @param stack The item stack to get the icon for. (Usually this, and usingItem will be the same if usingItem is not null)
+     * @param renderPass The pass to get the icon for, 0 is default.
+     * @param player The player holding the item
+     * @param usingItem The item the player is actively using. Can be null if not using anything.
+     * @param useRemaining The ticks remaining for the active item.
+     * @return The icon index
+     */
+    public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining)
+    {
+        return getIcon(stack, renderPass);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister par1IconRegister)
+    {
+        this.itemIcon = par1IconRegister.registerIcon(this.func_111208_A() + "_standby");
+        this.iconArray = new Icon[bowPullIconNameArray.length];
+
+        for (int i = 0; i < this.iconArray.length; ++i)
+        {
+            this.iconArray[i] = par1IconRegister.registerIcon(this.func_111208_A() + "_" + bowPullIconNameArray[i]);
+        }
+    }
     
 	@Override
 	public EnumSize getSize() {
@@ -144,10 +193,9 @@ public class ItemCustomBow extends ItemBow implements ISize
 		return EnumWeight.LIGHT;
 	}
 
-
 	@Override
 	public boolean canStack() {
-		return false;
+	        return false;
 	}
 	
 	private int getArrowId(InventoryPlayer inventory)
@@ -168,4 +216,6 @@ public class ItemCustomBow extends ItemBow implements ISize
         }
         return -1;
 	}
+	
+	
 }

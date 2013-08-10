@@ -1008,7 +1008,8 @@ public class TFCItems
     public static Item RedSteelArrowHead;
     public static Item Fletching;
     public static Item CrackedArrow;
-	
+	public static Item TerraBow;
+    
 	/**
 	 * Item Uses Setup
 	 * */
@@ -1128,7 +1129,7 @@ public class TFCItems
 
 		minecartCrate = (new ItemCustomMinecart(TFC_Settings.getIntFor(config,"item","minecartCrate",16000), 1)).setUnlocalizedName("minecartChest").func_111206_d("minecart_chest");
 
-		Item.itemsList[5+256] = null; Item.itemsList[5+256] = (new ItemCustomBow(5)).setUnlocalizedName("bow").func_111206_d("bow");
+		//Item.itemsList[5+256] = null; Item.itemsList[5+256] = (new ItemCustomBow(5)).setUnlocalizedName("bow").func_111206_d("bow");
 		Item.itemsList[63+256] = null; Item.itemsList[63+256] = new ItemTerra(63).setUnlocalizedName("porkchopRaw");
 		Item.itemsList[64+256] = null; Item.itemsList[64+256] = new ItemTerraFood(64, 35, 0.8F, true, 38).setFolder("").setUnlocalizedName("porkchopCooked");
 		Item.itemsList[93+256] = null; Item.itemsList[93+256] = new ItemTerra(93).setUnlocalizedName("fishRaw");
@@ -2300,8 +2301,11 @@ public class TFCItems
     	RedSteelArrow = new ItemArrow(TFC_Settings.getIntFor(config,"item","RedSteelArrow",num++), RedSteelToolMaterial, TFCItems.RedSteelArrowHead.itemID).setUnlocalizedName("Red Steel Arrow");
     	BlueSteelArrow = new ItemArrow(TFC_Settings.getIntFor(config,"item","BlueSteelArrow",num++), BlueSteelToolMaterial, TFCItems.BlueSteelArrowHead.itemID).setUnlocalizedName("Blue Steel Arrow");
 
-    	Fletching = new ItemTerra(TFC_Settings.getIntFor(config,"item","Fletching",num++)).setUnlocalizedName("Fletsching");
-    	CrackedArrow = new ItemTerra(TFC_Settings.getIntFor(config,"item","CrackedArrow",num++)).setUnlocalizedName("Cracked Arrow");   	
+    	Fletching = new ItemTerra(TFC_Settings.getIntFor(config,"item","Fletching",num++)).setFolder("archery/").setUnlocalizedName("Fletsching");
+    	CrackedArrow = new ItemTerra(TFC_Settings.getIntFor(config,"item","CrackedArrow",num++)).setFolder("archery/").setUnlocalizedName("Cracked Arrow");   	
+    	
+    	TerraBow = new ItemCustomBow(TFC_Settings.getIntFor(config,"item","TerraBow",num++)).setUnlocalizedName("Terra Bow");
+    	
     	Arrows = new Item[] {WoddenArrow, BoneArrow, StoneArrow, GlassArrow, TinArrow, BismuthArrow, ZincArrow, 
     			CopperArrow, BronzeArrow, BismuthBronzeArrow, BlackBronzeArrow, RoseGoldArrow, WroughtIronArrow,
     			SteelArrow, BlackSteelArrow, RedSteelArrow, BlueSteelArrow};

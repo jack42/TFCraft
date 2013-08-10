@@ -18,7 +18,7 @@ public class ItemArrow extends ItemTerra implements ISize {
 	public ItemArrow(int par1, float damage, int maxUses, double arrowBreakChange , int headId ) {
 		super(par1);
 		this.stackable = true;
-		this.setFolder("tools/");
+        this.setFolder("archery/");
 		this.setCreativeTab(TFCTabs.TFCTools);
 		this.damage = damage*0.55;
 		this.headBreackChange = 1.025-Math.sqrt(Math.sqrt(maxUses/TFCItems.RedSteelUses));

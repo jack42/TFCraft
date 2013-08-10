@@ -22,7 +22,6 @@ public class TFC_Settings
 	
 	public static int SkeletonBowID;
 	public static int SkeletonArrowID;
-	public static boolean enableTFCArcheryRecipes;
 	
 	public static boolean enableCropsDie;
 
@@ -78,7 +77,6 @@ public class TFC_Settings
 		//Archery
 		SkeletonBowID = getIntFor(config, "Archery", "SkeletonBowID", Item.bow.itemID);
 		SkeletonArrowID = getIntFor(config, "Archery", "SkeletonArrowID", Item.arrow.itemID);
-		enableTFCArcheryRecipes = getBooleanFor(config, "Archery", "enableTFCArcheryRecipes", true);	
 		//Caveins
 		minimumRockLoad = getIntFor(config,"Cavein Options","minimumRockLoad",1, "This is the minimum number of solid blocks that must be over a section in order for it to collapse.");
 		initialCollapseRatio = getIntFor(config,"Cavein Options","initialCollapseRatio",40, "This number is a 1 in X chance that when you mine a block, a collapse will occur.");
