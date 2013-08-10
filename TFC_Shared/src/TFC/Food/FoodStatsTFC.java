@@ -1,12 +1,19 @@
 package TFC.Food;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemFood;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.packet.Packet;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.util.DamageSource;
 import TFC.Core.TFC_Climate;
 import TFC.Core.TFC_Time;
+import TFC.Handlers.PacketHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -29,8 +36,8 @@ public class FoodStatsTFC
 	private long foodTimer = 0;
 	private long foodHealTimer = 0;
 
-	public float waterLevel = TFC_Time.dayLength*2/10;
-	private long waterTimer = 0;
+	public float waterLevel = TFC_Time.dayLength;
+	public long waterTimer = 0;
 
 
 	private int prevFoodLevel = 100;
@@ -51,7 +58,7 @@ public class FoodStatsTFC
 		{
 			int difficulty = player.worldObj.difficultySetting;
 			EntityPlayerMP playermp = (EntityPlayerMP)player;
-			
+
 			float temp = TFC_Climate.getHeightAdjustedTemp((int)player.posX, (int)player.posY, (int)player.posZ);
 
 			if (this.foodExhaustionLevel > 4.0F)
@@ -91,7 +98,7 @@ public class FoodStatsTFC
 
 				if (this.foodLevel >= 25 && player.shouldHeal())
 				{
-					player.heal((int) (player.getMaxHealth()*0.01f));
+					player.heal((int) (player.func_110138_aP()*0.01f));
 
 					if (this.foodSaturationLevel > 0.0F)
 					{
@@ -104,7 +111,7 @@ public class FoodStatsTFC
 				}
 				else if (this.foodLevel <= 0)
 				{
-					if (difficulty > 1 || (player.getHealth() > 50))
+					if (difficulty > 1 || (player.func_110143_aJ() > 50))
 					{
 						player.attackEntityFrom(DamageSource.starve, 50);
 					}
@@ -112,28 +119,32 @@ public class FoodStatsTFC
 			}
 
 			float tempWaterMod = temp;
-			if(tempWaterMod >= 30)
+			if(tempWaterMod >= 30) {
 				tempWaterMod = (tempWaterMod-30)*0.1f;
-			else tempWaterMod = 0;
+			} else {
+				tempWaterMod = 0;
+			}
 			//Handle water related ticking
 			if(player.isSprinting()&& !player.capabilities.isCreativeMode)
 			{
-				waterLevel -= 1+(tempWaterMod);
+				waterLevel -= 5+(tempWaterMod);
 			}
-
-			for(;waterTimer <= TFC_Time.getTotalTicks() && !player.capabilities.isCreativeMode; waterTimer += 20)
+			long time = TFC_Time.getTotalTicks();
+			for(;waterTimer < time && !player.capabilities.isCreativeMode; waterTimer++)
 			{
-				
+
 				/**Reduce the player's water for normal living*/
 				waterLevel -= 1+(tempWaterMod/2);
 				if(player.isInWater())
 				{
-					waterLevel = getMaxWater(player);
+					this.restoreWater(player, 20);
 				}
-				if(waterLevel < 0)
+				if(waterLevel < 0) {
 					waterLevel = 0;
-				if(waterLevel == 0 && temp > 30)
+				}
+				if(waterLevel == 0 && (temp > 30 || difficulty > 1)) {
 					player.attackEntityFrom(DamageSource.generic, 1);
+				}
 			}
 		}
 	}
@@ -150,12 +161,12 @@ public class FoodStatsTFC
 	{
 		return (int) this.foodLevel;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public int getPrevFoodLevel()
-    {
-        return this.prevFoodLevel ;
-    }
+	public int getPrevFoodLevel()
+	{
+		return this.prevFoodLevel ;
+	}
 
 	/**
 	 * If foodLevel is not max.
@@ -164,7 +175,7 @@ public class FoodStatsTFC
 	{
 		return this.foodLevel < 100;
 	}
-	
+
 	public boolean needFood(int filling)
 	{
 		return needFood() && this.foodLevel + filling < 140;
@@ -181,6 +192,8 @@ public class FoodStatsTFC
 			this.waterLevel = foodCompound.getFloat("waterLevel");
 			this.foodLevel = foodCompound.getFloat("foodLevel");
 			this.foodTimer = foodCompound.getLong("foodTickTimer");
+			this.foodHealTimer = foodCompound.getLong("foodHealTimer");
+			this.waterTimer = foodCompound.getLong("waterTimer");
 			this.foodSaturationLevel = foodCompound.getFloat("foodSaturationLevel");
 			this.foodExhaustionLevel = foodCompound.getFloat("foodExhaustionLevel");
 		}
@@ -195,6 +208,8 @@ public class FoodStatsTFC
 		foodCompound.setFloat("waterLevel", this.waterLevel);
 		foodCompound.setFloat("foodLevel", this.foodLevel);
 		foodCompound.setLong("foodTickTimer", this.foodTimer);
+		foodCompound.setLong("foodHealTimer", this.foodHealTimer);
+		foodCompound.setLong("waterTimer", this.waterTimer);
 		foodCompound.setFloat("foodSaturationLevel", this.foodSaturationLevel);
 		foodCompound.setFloat("foodExhaustionLevel", this.foodExhaustionLevel);
 		par1NBTTagCompound.setCompoundTag("foodCompound", foodCompound);
@@ -220,7 +235,7 @@ public class FoodStatsTFC
 	{
 		this.foodLevel = par1;
 	}
-	
+
 	public void setFoodSaturationLevel(float par1)
 	{
 		this.foodSaturationLevel = par1;
@@ -242,16 +257,41 @@ public class FoodStatsTFC
 	{
 		this.addStats(par1ItemFood.getHealAmount(), par1ItemFood.getSaturationModifier());
 	}
-	
+
 	public void restoreWater(EntityPlayer player, int w)
 	{
 		this.waterLevel = Math.min(this.waterLevel + w, this.getMaxWater(player));
+		this.writeNBT(player.getEntityData());
 	}
-	
+
 	public void resetTimers()
 	{
 		waterTimer = TFC_Time.getTotalTicks();
 		foodTimer = TFC_Time.getTotalTicks();
 		foodHealTimer = TFC_Time.getTotalTicks();
+	}
+
+	public static Packet getStatusPacket(FoodStatsTFC foodstats)
+	{
+		ByteArrayOutputStream bos=new ByteArrayOutputStream(10);
+		DataOutputStream dos=new DataOutputStream(bos);
+		Packet250CustomPayload pkt=new Packet250CustomPayload();
+		try 
+		{
+			//The packet type sent determines who is expected to process this packet, the client or the server.
+			dos.writeByte(PacketHandler.Packet_Player_Status);
+			dos.writeFloat(foodstats.foodLevel);
+			dos.writeFloat(foodstats.waterLevel);
+
+			pkt.channel="TerraFirmaCraft";
+			pkt.data = bos.toByteArray();
+			pkt.length= pkt.data.length;
+			pkt.isChunkDataPacket=false;
+		} 
+		catch (IOException e) 
+		{
+
+		}
+		return pkt;
 	}
 }

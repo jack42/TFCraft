@@ -22,6 +22,7 @@ import TFC.Core.Player.PlayerTracker;
 import TFC.Core.Util.Localization;
 import TFC.Food.TFCPotion;
 import TFC.Handlers.AnvilCraftingHandler;
+import TFC.Handlers.BiomeEventHandler;
 import TFC.Handlers.ChatListenerTFC;
 import TFC.Handlers.ChunkDataEventHandler;
 import TFC.Handlers.ChunkEventHandler;
@@ -68,14 +69,14 @@ public class TerraFirmaCraft
 
 	public TerraFirmaCraft()
 	{
-		
+
 	}
 
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event) 
 	{
 		instance = this;
-		
+
 		TickRegistry.registerTickHandler(new ServerTickHandler(), Side.SERVER);
 		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
 
@@ -92,7 +93,7 @@ public class TerraFirmaCraft
 		GameRegistry.registerWorldGenerator(new WorldGenOre(5,96));
 		GameRegistry.registerWorldGenerator(new WorldGenOre(60,130));
 		GameRegistry.registerWorldGenerator(new WorldGenCaveDecor());
-		
+
 		TFCWorldType.DEFAULT = new TFCWorldType(0, "DEFAULT", 1);
 		TFCWorldType.FLAT = new TFCWorldType(1, "FLAT");
 		DimensionManager.unregisterProviderType(-1);
@@ -101,7 +102,7 @@ public class TerraFirmaCraft
 		DimensionManager.registerProviderType(0, TFCProvider.class, true);
 		DimensionManager.unregisterProviderType(1);
 		DimensionManager.registerProviderType(1, TFCProvider.class, true);
-		
+
 
 		//Register Key Bindings(Client only)
 		proxy.registerKeys();
@@ -116,14 +117,15 @@ public class TerraFirmaCraft
 		proxy.registerTileEntities(true);
 
 		//Register Sound Handler (Client only)
-		proxy.registerSoundHandler();
+		//proxy.registerSoundHandler();
 	}
 
 	@Init
 	public void initialize(FMLInitializationEvent evt)
 	{
 		//Add Item Name Localizations
-		Localization.addLocalization("/mods/TFC/lang/", "en_US");
+		Localization.addLocalization("/lang/", "en_US");
+		//LanguageRegistry.instance().loadLocalization("assets/terrafirmacraft/lang/", "en_US", false);
 		proxy.registerTranslations();
 
 		//Register all of the recipes
@@ -137,16 +139,16 @@ public class TerraFirmaCraft
 
 		// Register the Entity Spawn Handler
 		MinecraftForge.EVENT_BUS.register(new EntitySpawnHandler());
-		
+
 		// Register the Entity Living Update Handler
 		MinecraftForge.EVENT_BUS.register(new EntityLivingHandler());
-		
+
 		// Register the Entity Hurt Handler
 		MinecraftForge.EVENT_BUS.register(new EntityDamageHandler());
 
 		// Register Gui Handler
 		NetworkRegistry.instance().registerGuiHandler(this, proxy);
-		
+
 		// Register Chat Listener
 		NetworkRegistry.instance().registerChatListener(new ChatListenerTFC());
 
@@ -155,25 +157,28 @@ public class TerraFirmaCraft
 
 		// Register all the render stuff for the client
 		proxy.registerRenderInformation();
-		
+
 		// Register the Chunk Data Load/Save Handler
 		MinecraftForge.EVENT_BUS.register(new ChunkDataEventHandler());
-		
+
 		// Register the Chunk Load/Save Handler
 		MinecraftForge.EVENT_BUS.register(new ChunkEventHandler());
-		
+
 		// Register the Chunk Load/Save Handler
 		MinecraftForge.EVENT_BUS.register(new EnteringChunkHandler());
-		
+
 		// Register Anvil Crafting Handler
 		MinecraftForge.EVENT_BUS.register(new AnvilCraftingHandler());
-		
+
 		//Register our player tracker
 		GameRegistry.registerPlayerTracker(new PlayerTracker());
-		
+
+		// Register the Biome Event Handler
+		MinecraftForge.EVENT_BUS.register(new BiomeEventHandler());
+
 		//Setup custom potion effects
 		TFCPotion.Setup();
-		
+
 		TFC_ItemHeat.SetupItemHeat();
 
 		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(
@@ -185,7 +190,7 @@ public class TerraFirmaCraft
 		LiquidContainerRegistry.registerLiquid(new LiquidContainerData(
 				LiquidDictionary.getLiquid("Water", LiquidContainerRegistry.BUCKET_VOLUME), 
 				new ItemStack(TFCItems.WoodenBucketWater), new ItemStack(TFCItems.WoodenBucketEmpty)));
-		
+
 		TFC_Climate.initCache();
 	}
 

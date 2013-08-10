@@ -3,7 +3,9 @@ package TFC.GUI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.Icon;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -12,6 +14,7 @@ import TFC.API.Enums.CraftingRuleEnum;
 
 public class GuiAnvilButton extends GuiButton 
 {
+	private static ResourceLocation texture = new ResourceLocation(Reference.ModID, Reference.AssetPathGui + "anvilicons.png");
 	public Icon icon;
 	public int bX = 0;
 	public int bY = 0;
@@ -50,13 +53,13 @@ public class GuiAnvilButton extends GuiButton
 		blue = b;
 	}
 
+
 	@Override
 	public void drawButton(Minecraft mc, int x, int y)
 	{
 		if (this.drawButton)
 		{
-			mc.renderEngine.bindTexture(Reference.AssetPathGui + "gui_anvil.png");
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
 
 			int k = this.getHoverState(this.field_82253_i)-1;
 			if(icon == null)
@@ -69,15 +72,19 @@ public class GuiAnvilButton extends GuiButton
 					this.displayString = Rules[ruleIndex].Name;
 				}
 			}
+
+			mc.func_110434_K().func_110577_a(GuiAnvil.texture);
 			GL11.glColor4ub(red, green, blue, (byte)255);
 			this.drawTexturedModalRect(this.xPosition, this.yPosition, this.bX + k * 16, this.bY + (ruleIndex * 22), this.bW, this.bH);
-			mc.renderEngine.bindTexture("/terrain.png");
 
 			this.field_82253_i = x >= this.xPosition && y >= this.yPosition && x < this.xPosition + this.width && y < this.yPosition + this.height;
-			
+
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			if(icon != null)
+			if(icon != null) 
+			{
+				mc.func_110434_K().func_110577_a(TextureMap.field_110575_b);
 				this.drawTexturedModelRectFromIcon(this.xPosition, this.yPosition, icon, this.width, this.height);
+			}
 
 			this.mouseDragged(mc, x, y);
 

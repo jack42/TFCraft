@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import TFC.TerraFirmaCraft;
 import TFC.API.IBag;
@@ -31,6 +30,12 @@ public class ItemPotterySmallVessel extends ItemPotteryBase implements IBag
 		super(id);
 		this.MetaNames = new String[]{"Clay Vessel", "Ceramic Vessel", "Ceramic Vessel"};
 		this.setMaxStackSize(1);
+	}
+	
+	@Override
+	public boolean canStack()
+	{
+		return false;
 	}
 
 	@Override
@@ -151,18 +156,18 @@ public class ItemPotterySmallVessel extends ItemPotteryBase implements IBag
 			{
 				Metal m = null;
 				if(types[0] != null) m = types[0];
-				else if(types[1] != null) m = types[0];
-				else if(types[2] != null) m = types[0];
-				else if(types[3] != null) m = types[0];
+				else if(types[1] != null) m = types[1];
+				else if(types[2] != null) m = types[2];
+				else if(types[3] != null) m = types[3];
 
 				if(m != null)
 				{
 					NBTTagCompound tag = is.stackTagCompound;
 					tag.setString("MetalType", m.Name);
 					tag.setInteger("MetalAmount", total);
+					is.getTagCompound().removeTag("Items");
+					is.setItemDamage(2);
 				}
-				is.getTagCompound().removeTag("Items");
-				is.setItemDamage(2);
 			}
 		}
 	}
@@ -230,21 +235,13 @@ public class ItemPotterySmallVessel extends ItemPotteryBase implements IBag
 	{
 		if (TFC_Core.showExtraInformation()) 
 		{
-			arraylist.add(EnumChatFormatting.DARK_GRAY + StringUtil.localize("gui.Help") + ":");
-			arraylist.add(EnumChatFormatting.WHITE + StringUtil.localize("gui.PotteryBase.Inst0") + " " + 
-					EnumChatFormatting.AQUA + StringUtil.localize("gui.RightClick") + " " + 
-					EnumChatFormatting.WHITE + StringUtil.localize("gui.PotteryBase.Inst1"));
-			arraylist.add( 
-					EnumChatFormatting.WHITE + StringUtil.localize("gui.PotteryVesselSmall.Inst0") + " " + 
-							EnumChatFormatting.AQUA + StringUtil.localize("gui.RightClick") + " " + 
-							EnumChatFormatting.WHITE + StringUtil.localize("gui.PotteryVesselSmall.Inst1"));
+			arraylist.add(StringUtil.localize("gui.Help"));
+			arraylist.add(StringUtil.localize("gui.PotteryBase.Inst0"));
+			arraylist.add(StringUtil.localize("gui.PotteryVesselSmall.Inst0"));
 		}
 		else
 		{
-			arraylist.add(
-					EnumChatFormatting.DARK_GRAY + StringUtil.localize("gui.Help") + ": (" + StringUtil.localize("gui.Armor.Hold") + " " + 
-							EnumChatFormatting.GRAY + StringUtil.localize("gui.Armor.Shift") + 
-							EnumChatFormatting.DARK_GRAY + ")");
+			arraylist.add(StringUtil.localize("gui.ShowHelp"));
 		}
 	}
 

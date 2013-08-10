@@ -6,9 +6,9 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -58,7 +58,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         this.yOffset = 0.0F;
     }
 
-    public EntityAdvancedArrowTFC(World par1World, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5, int itemId)
+    public EntityAdvancedArrowTFC(World par1World, EntityLivingBase par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5, int itemId)
     {
         this(par1World);
         this.shootingEntity = par2EntityLiving;
@@ -88,7 +88,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         }
     }
 
-    public EntityAdvancedArrowTFC(World par1World, EntityLiving par2EntityLiving, float par3, int itemId)
+    public EntityAdvancedArrowTFC(World par1World, EntityLivingBase par2EntityLiving, float par3, int itemId)
     {
         this(par1World);
         this.shootingEntity = par2EntityLiving;

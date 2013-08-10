@@ -15,6 +15,7 @@ import TFC.TFCItems;
 import TFC.API.HeatIndex;
 import TFC.API.HeatRaw;
 import TFC.API.HeatRegistry;
+import TFC.API.Metal;
 import TFC.Core.Util.StringUtil;
 import TFC.Items.ItemTerra;
 import TFC.WorldGen.TFCBiome;
@@ -99,6 +100,9 @@ public class TFC_ItemHeat
 		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.HCBlueSteelIngot,1), BlueSteelRaw,new ItemStack(TFCItems.HCBlueSteelUnshaped,1)));
 		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.HCRedSteelIngot,1), RedSteelRaw,new ItemStack(TFCItems.HCRedSteelUnshaped,1)));
 		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.HCSteelIngot,1), SteelRaw,new ItemStack(TFCItems.HCSteelUnshaped,1)));
+		
+		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.UnknownIngot,1), CopperRaw,new ItemStack(TFCItems.UnknownUnshaped,1)));
+		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.UnknownUnshaped,1), CopperRaw,new ItemStack(TFCItems.UnknownUnshaped,1)).setMorph(new ItemStack(TFCItems.CeramicMold)));
 
 		//Bismuth
 		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.BismuthIngot,1), BismuthRaw,new ItemStack(TFCItems.BismuthUnshaped,1)));
@@ -296,6 +300,7 @@ public class TFC_ItemHeat
 		manager.addIndex(new HeatIndex(new ItemStack(Item.porkRaw, 1), 0.85F, 130.5F, new ItemStack(Item.porkCooked, 1)));
 		manager.addIndex(new HeatIndex(new ItemStack(Item.beefRaw, 1), 0.85F, 135.5F, new ItemStack(Item.beefCooked, 1)));
 		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.muttonRaw,1),0.85F,135.5F, new ItemStack(TFCItems.muttonCooked,1)));
+		manager.addIndex(new HeatIndex(new ItemStack(TFCItems.CalamariRaw,1),0.85F,135.5F, new ItemStack(TFCItems.CalamariCooked,1)));
 		manager.addIndex(new HeatIndex(new ItemStack(Item.chickenRaw, 1), 0.85F, 120.5F, new ItemStack(Item.chickenCooked, 1)));
 		manager.addIndex(new HeatIndex(new ItemStack(Item.fishRaw, 1), 0.85F, 120.5F, new ItemStack(Item.fishCooked, 1)));
 		manager.addIndex(new HeatIndex(new ItemStack(Item.egg, 1), 0.90F, 110.5F, new ItemStack(TFCItems.EggCooked, 1)));
@@ -497,6 +502,24 @@ public class TFC_ItemHeat
 		if(manager!=null)
 		{
 			HeatIndex hi = manager.findMatchingIndex(is);
+			if(hi != null)
+			{
+				return hi.meltTemp;
+			}
+			else return -1;
+		} 
+		else 
+		{
+			return -1;
+		}
+	}
+	
+	public static float getMeltingPoint(Metal m)
+	{       
+		HeatRegistry manager = HeatRegistry.getInstance();
+		if(manager!=null)
+		{
+			HeatIndex hi = manager.findMatchingIndex(new ItemStack(Item.itemsList[m.MeltedItemID]));
 			if(hi != null)
 			{
 				return hi.meltTemp;

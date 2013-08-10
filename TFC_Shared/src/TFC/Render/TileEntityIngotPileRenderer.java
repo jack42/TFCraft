@@ -2,7 +2,9 @@ package TFC.Render;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.src.ModLoader;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -16,7 +18,7 @@ public class TileEntityIngotPileRenderer extends TileEntitySpecialRenderer
 	private final ModelIngotPile ingotModel = new ModelIngotPile();
 	private static String[] metalTypes =  new String[]{"Bismuth", "Bismuth Bronze", "Black Bronze", "Black Steel", "Blue Steel", "Brass", 
 		"Bronze", "Copper", "Gold", "Wrought Iron", "Lead", "Nickel", "Pig Iron", "Platinum", "Red Steel", "Rose Gold", "Silver", "Steel",
-		"Sterling Silver", "Tin", "Zinc" };
+		"Sterling Silver", "Tin", "Zinc", "Unknown" };
 	/**
 	 * Renders the TileEntity for the chest at a position.
 	 */
@@ -36,7 +38,7 @@ public class TileEntityIngotPileRenderer extends TileEntitySpecialRenderer
 			if (par1TileEntityPile.getStackInSlot(0)!=null)
 			{
 				int i = ((TFC.Blocks.BlockIngotPile)var10).getStack(par1TileEntityPile.worldObj,par1TileEntityPile);
-				bindTextureByName(Reference.AssetPath + "/textures/blocks/metal/"+par1TileEntityPile.type+".png"); //texture
+				ModLoader.getMinecraftInstance().renderEngine.func_110577_a(new ResourceLocation(Reference.ModID, "/textures/blocks/metal/"+par1TileEntityPile.type+".png")); //texture
 				GL11.glPushMatrix(); //start
 				GL11.glTranslatef((float)d + 0.0F, (float)d1 + 0F, (float)d2 + 0.0F); //size
 

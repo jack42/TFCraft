@@ -1,8 +1,9 @@
 package TFC.Blocks.Devices;
 
+import java.util.ArrayList;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,6 +29,7 @@ public class BlockPottery extends BlockTerraContainer
 		super(i, Material.glass);
 		this.setBlockBounds(0, 0, 0, 1, 0.05f, 1);
 		this.setTickRandomly(true);
+		this.setHardness(2.0f);
 	}
 
 	@Override
@@ -54,15 +56,15 @@ public class BlockPottery extends BlockTerraContainer
 		return false;
     }
 
-	@Override
-	public void harvestBlock(World world, EntityPlayer entityplayer, int i, int j, int k, int l)
-	{		
-		//super.harvestBlock(world, entityplayer, i, j, k, l);
-		int meta = world.getBlockMetadata(i, j, k);
-		if(world.getBlockMetadata(i, j, k) > 0)
+   @Override
+	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		if(metadata > 0)
 		{
-			world.spawnEntityInWorld(new EntityItem(world, i, j, k, new ItemStack(TFCItems.Straw, meta)));
+			ret.add(new ItemStack(TFCItems.Straw, metadata));
 		}
+		return ret;
 	}
 
 	@Override
@@ -80,7 +82,7 @@ public class BlockPottery extends BlockTerraContainer
 					else
 						world.setBlockMetadataWithNotify(x, y, z, meta+1, 2);
 					
-					player.inventory.consumeInventoryItem(player.inventory.currentItem);
+					player.inventory.decrStackSize(player.inventory.currentItem, 1);
 					return true;
 				}
 			}
@@ -89,33 +91,29 @@ public class BlockPottery extends BlockTerraContainer
 				if(side == 1)
 				{
 					int offset = 0;
-					if(world.getBlockId(x, y, z) != TFCBlocks.Pottery.blockID)
+					/*if(world.getBlockId(x, y, z) != TFCBlocks.Pottery.blockID)
 					{
 						world.setBlock(x, y+1, z, TFCBlocks.Pottery.blockID);
 						offset = 1;
-					}
+					}*/
 					
 					TileEntityPottery te = (TileEntityPottery) world.getBlockTileEntity(x, y+offset, z);
 					
 					if(hitX < 0.5 && hitZ < 0.5)
 					{
 						te.ejectItem(0);
-						te.inventory[0] = null;
 					}
 					else if(hitX > 0.5 && hitZ < 0.5)
 					{
 						te.ejectItem(1);
-						te.inventory[1] = null;
 					}
 					else if(hitX < 0.5 && hitZ > 0.5)
 					{
 						te.ejectItem(2);
-						te.inventory[2] = null;
 					}
 					else if(hitX > 0.5 && hitZ > 0.5)
 					{
 						te.ejectItem(3);
-						te.inventory[3] = null;
 					}
 					te.broadcastPacketInRange(te.createUpdatePacket());
 				}

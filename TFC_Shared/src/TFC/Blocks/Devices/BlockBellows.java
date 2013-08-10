@@ -3,12 +3,13 @@ package TFC.Blocks.Devices;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import TFC.Reference;
 import TFC.TFCBlocks;
@@ -16,6 +17,8 @@ import TFC.TerraFirmaCraft;
 import TFC.Blocks.BlockTerraContainer;
 import TFC.Core.TFC_Sounds;
 import TFC.TileEntities.TileEntityBellows;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockBellows extends BlockTerraContainer {
 
@@ -39,6 +42,12 @@ public class BlockBellows extends BlockTerraContainer {
 				world.playSoundEffect(i, j, k, TFC_Sounds.BELLOWS, 0.3F, 1);
 			}
 		}
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess par1iBlockAccess, int par2, int par3, int par4, int par5) {
 		return true;
 	}
 
@@ -123,7 +132,7 @@ public class BlockBellows extends BlockTerraContainer {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLiving entityliving, ItemStack is) {
+	public void onBlockPlacedBy(World world, int i, int j, int k, EntityLivingBase entityliving, ItemStack is) {
 		super.onBlockPlacedBy(world, i, j, k, entityliving, is);
 		int l = MathHelper.floor_double(entityliving.rotationYaw * 4F / 360F + 0.5D) & 3;
 		world.setBlockMetadataWithNotify(i, j, k, l, 0x2);

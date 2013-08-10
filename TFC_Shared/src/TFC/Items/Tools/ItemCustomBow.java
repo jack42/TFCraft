@@ -1,8 +1,5 @@
 package TFC.Items.Tools;
 
-import java.util.Arrays;
-
-import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,10 +23,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemCustomBow extends ItemBow implements ISize
 {
-	
-	public static final String[] bowPullIconNameArray = new String[] {"bow_pull_0", "bow_pull_1", "bow_pull_2"};
-    @SideOnly(Side.CLIENT)
-    private Icon[] iconArray;
+	public static final String[] bowPullIconNameArray = new String[] {"pulling_0", "pulling_1", "pulling_2"};
+	@SideOnly(Side.CLIENT)
+	private Icon[] iconArray;
     
     public ItemCustomBow(int par1)
     {
@@ -136,20 +132,6 @@ public class ItemCustomBow extends ItemBow implements ISize
         return par1ItemStack;
     }    
     
-    @Override
-	@SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister)
-    {
-        super.registerIcons(par1IconRegister);
-        this.iconArray = new Icon[bowPullIconNameArray.length];
-
-        for (int i = 0; i < this.iconArray.length; ++i)
-        {
-            this.iconArray[i] = par1IconRegister.registerIcon(bowPullIconNameArray[i]);
-        }
-        Item.bow.registerIcons(par1IconRegister);
-    }
-
 	@Override
 	public EnumSize getSize() {
 		// TODO Auto-generated method stub

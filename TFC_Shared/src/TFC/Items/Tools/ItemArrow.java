@@ -15,7 +15,7 @@ public class ItemArrow extends ItemTerra implements ISize {
 	private double headBreackChange;
 	private double arrowBreakChage;
 
-	public ItemArrow(int par1, int damage, int maxUses, double arrowBreakChange , int headId ) {
+	public ItemArrow(int par1, float damage, int maxUses, double arrowBreakChange , int headId ) {
 		super(par1);
 		this.stackable = true;
 		this.setFolder("tools/");
@@ -26,7 +26,7 @@ public class ItemArrow extends ItemTerra implements ISize {
 		this.headId = headId;
 	}
 
-	public ItemArrow(int par1, int damage, int maxUses, int headId ) {
+	public ItemArrow(int par1, float damage, int maxUses, int headId ) {
 		this(par1, damage, maxUses, 0.2, headId);
 	}
 	

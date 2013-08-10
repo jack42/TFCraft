@@ -40,8 +40,8 @@ public class ContainerMold extends ContainerTFC {
 	 * Callback for when the crafting gui is closed.
 	 */
 	@Override
-	public void onCraftGuiClosed(EntityPlayer player) {
-		super.onCraftGuiClosed(player);
+	public void onContainerClosed(EntityPlayer player) {
+		super.onContainerClosed(player);
 		if (!this.world.isRemote)
 		{
 			ItemStack itemstack = this.craftResult.getStackInSlotOnClosing(0);
@@ -93,21 +93,24 @@ public class ContainerMold extends ContainerTFC {
 		if(craftResult.getStackInSlot(0) == null)
 		{
 			PlayerInfo pi = PlayerManagerTFC.getInstance().getPlayerInfoFromPlayer(player);
-			if(containerInv.getStackInSlot(1) != null && pi.moldTransferTimer < 100)
+			if(containerInv.getStackInSlot(1) != null && pi.moldTransferTimer < 100) {
 				pi.moldTransferTimer++;
+			}
 
-			if(containerInv.getStackInSlot(0) != null && containerInv.getStackInSlot(1) != null && pi.moldTransferTimer == 1000)
+			if(containerInv.getStackInSlot(0) != null && containerInv.getStackInSlot(1) != null && pi.moldTransferTimer == 1000) {
 				pi.moldTransferTimer = 0;
+			}
 
-			if(containerInv.getStackInSlot(0) == null || containerInv.getStackInSlot(1) == null)
+			if(containerInv.getStackInSlot(0) == null || containerInv.getStackInSlot(1) == null) {
 				pi.moldTransferTimer = 1000;
+			}
 
 			if(containerInv.getStackInSlot(0) != null && containerInv.getStackInSlot(1) != null && pi.moldTransferTimer == 100 && CraftingManagerTFC.getInstance().findMatchingRecipe(this.containerInv, world) != null)
 			{
 				ItemStack is = CraftingManagerTFC.getInstance().findMatchingRecipe(this.containerInv, world);
 				is.setTagCompound(containerInv.getStackInSlot(1).stackTagCompound);
 				craftResult.setInventorySlotContents(0, is);
-				containerInv.setInventorySlotContents(1, new ItemStack(TFCItems.CeramicMold, 1));
+				containerInv.setInventorySlotContents(1, new ItemStack(TFCItems.CeramicMold, 1, 1));
 				containerInv.setInventorySlotContents(0, null);
 			}
 			else if(containerInv.getStackInSlot(0) != null && containerInv.getStackInSlot(1) != null && pi.moldTransferTimer == 100)

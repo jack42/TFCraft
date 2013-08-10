@@ -1,60 +1,35 @@
 package TFC.Entities.Mobs;
 
-import TFC.*;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.world.World;
+import TFC.API.ICausesDamage;
+import TFC.API.Enums.EnumDamageType;
 import TFC.Core.TFC_MobDamage;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.entity.*;
-import net.minecraft.client.gui.inventory.*;
-import net.minecraft.block.*;
-import net.minecraft.block.material.*;
-import net.minecraft.crash.*;
-import net.minecraft.creativetab.*;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.*;
-import net.minecraft.entity.effect.*;
-import net.minecraft.entity.item.*;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.player.*;
-import net.minecraft.entity.projectile.*;
-import net.minecraft.inventory.*;
-import net.minecraft.item.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraft.network.packet.*;
-import net.minecraft.pathfinding.*;
-import net.minecraft.potion.*;
-import net.minecraft.server.*;
-import net.minecraft.stats.*;
-import net.minecraft.tileentity.*;
-import net.minecraft.util.*;
-import net.minecraft.village.*;
-import net.minecraft.world.*;
-import net.minecraft.world.biome.*;
-import net.minecraft.world.chunk.*;
-import net.minecraft.world.gen.feature.*;
 
-public class EntityEndermanTFC extends EntityEnderman
+public class EntityEndermanTFC extends EntityEnderman implements ICausesDamage
 {
-    public static boolean[] carriableBlocks = new boolean[256];
+	public static boolean[] carriableBlocks = new boolean[256];
 
 
-    public EntityEndermanTFC(World par1World)
-    {
-        super(par1World);
+	public EntityEndermanTFC(World par1World)
+	{
+		super(par1World);
 
-    }
-    
-    @Override
-    public int getMaxHealth()
-    {
-        return 2000;
-    }
+	}
 
-    @Override
-    public int getAttackStrength(Entity par1Entity)
-    {
-        return TFC_MobDamage.EndermanDamage;
-    }
+	@Override
+	protected void func_110147_ax()
+	{
+		super.func_110147_ax();
+		this.func_110148_a(SharedMonsterAttributes.field_111264_e).func_111128_a(TFC_MobDamage.EndermanDamage);
+		this.func_110148_a(SharedMonsterAttributes.field_111267_a).func_111128_a(2000);//MaxHealth
+	}
+
+	@Override
+	public EnumDamageType GetDamageType() {
+		// TODO Auto-generated method stub
+		return EnumDamageType.GENERIC;
+	}
 
 }

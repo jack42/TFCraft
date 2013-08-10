@@ -23,6 +23,8 @@ public class Recipes
 	public static Item[] Chisels;
 
 	public static Item[] Saws;
+	
+	public static Item[] Scythes;
 
 	public static Item[] Knives;
 
@@ -120,14 +122,10 @@ public class Recipes
 
 		GameRegistry.addRecipe(new ItemStack(TFCItems.WoodenBucketEmpty, 1), new Object[] { "w w","w w"," w ", Character.valueOf('w'), new ItemStack(TFCItems.SinglePlank, 1, 32767) });
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(Item.gunpowder,2,0),new Object[] {new ItemStack(Item.coal,1,32767),new ItemStack(TFCItems.SaltpeterPowder,1,32767),new ItemStack(TFCItems.SulfurPowder)});
+		GameRegistry.addShapelessRecipe(new ItemStack(Item.gunpowder,2,0),new Object[] {new ItemStack(Item.coal,1,32767),new ItemStack(TFCItems.Powder, 1, 4),new ItemStack(TFCItems.Powder, 1, 3)});
 		
 		for(int i = 0; i < Global.WOOD_ALL.length; i++)
 		{
-			for(int j = 0; j < Axes.length; j++)
-			{
-				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.SinglePlank, 3, i), new Object[] {new ItemStack(TFCItems.Logs, 1, i), new ItemStack(Axes[j], 1, 32767)});
-			}
 			for(int j = 0; j < Saws.length; j++)
 			{
 				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.SinglePlank, 8, i), new Object[] {new ItemStack(TFCItems.Logs, 1, i), new ItemStack(Saws[j], 1, 32767)});
@@ -231,9 +229,9 @@ public class Recipes
 		
 		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Limewater,1,32767)});
 		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand2,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Limewater,1,32767)});
-		GameRegistry.addRecipe(new ItemStack(TFCItems.Limewater,1), new Object[]{"P","X",Character.valueOf('P'),new ItemStack(TFCItems.Flux),Character.valueOf('X'),new ItemStack(TFCItems.WoodenBucketWater.setContainerItem(null))});
-		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X","Y",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Flux),Character.valueOf('Y'),new ItemStack(TFCItems.WoodenBucketWater,1,32767)});
-		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X","Y",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand2,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Flux),Character.valueOf('Y'),new ItemStack(TFCItems.WoodenBucketWater,1,32767)});
+		GameRegistry.addRecipe(new ItemStack(TFCItems.Limewater,1), new Object[]{"P","X",Character.valueOf('P'),new ItemStack(TFCItems.Powder, 1, 0),Character.valueOf('X'),new ItemStack(TFCItems.WoodenBucketWater.setContainerItem(null))});
+		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X","Y",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Powder, 1, 0),Character.valueOf('Y'),new ItemStack(TFCItems.WoodenBucketWater,1,32767)});
+		GameRegistry.addRecipe(new ItemStack(TFCItems.Mortar,16), new Object[]{"P","X","Y",Character.valueOf('P'),new ItemStack(TFCBlocks.Sand2,1,32767),Character.valueOf('X'),new ItemStack(TFCItems.Powder, 1, 0),Character.valueOf('Y'),new ItemStack(TFCItems.WoodenBucketWater,1,32767)});
 		
 		
 		//Gold Pan
@@ -246,9 +244,9 @@ public class Recipes
 		for(int j = 0; j < Recipes.Hammers.length; j++)
 		{
 			for (int i=0; i < Global.STONE_FLUXINDEX.length; i++) {
-				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 2), new Object[] {new ItemStack(TFCItems.LooseRock, 1, Global.STONE_FLUXINDEX[i]), new ItemStack(Recipes.Hammers[j], 1, 32767)});
+				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Powder, 2, 0), new Object[] {new ItemStack(TFCItems.LooseRock, 1, Global.STONE_FLUXINDEX[i]), new ItemStack(Recipes.Hammers[j], 1, 32767)});
 			}
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 6), new Object[] {new ItemStack(TFCItems.OreChunk, 1, 32), new ItemStack(Recipes.Hammers[j], 1, 32767)});
+			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Powder, 6, 0), new Object[] {new ItemStack(TFCItems.OreChunk, 1, 32), new ItemStack(Recipes.Hammers[j], 1, 32767)});
 			if (TFC_Settings.enableTFCArcheryRecipes)
 			{
 				GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.GlassArrowHead, 8), new Object[] {new ItemStack(Block.glass, 1), new ItemStack(Recipes.Hammers[j], 1, 32767)});
@@ -284,9 +282,9 @@ public class Recipes
 		}
 
 		for (int i=0; i < Global.STONE_FLUXINDEX.length; i++) {
-			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 1), new Object[] {new ItemStack(TFCItems.LooseRock, 1, Global.STONE_FLUXINDEX[i]), new ItemStack(TFCItems.StoneHammer, 1, 32767)});
+			GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Powder, 1, 0), new Object[] {new ItemStack(TFCItems.LooseRock, 1, Global.STONE_FLUXINDEX[i]), new ItemStack(TFCItems.StoneHammer, 1, 32767)});
 		}
-		GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Flux, 4), new Object[] {new ItemStack(TFCItems.OreChunk, 1, 32), new ItemStack(TFCItems.StoneHammer, 1, 32767)});
+		GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.Powder, 4, 0), new Object[] {new ItemStack(TFCItems.OreChunk, 1, 32), new ItemStack(TFCItems.StoneHammer, 1, 32767)});
 
 		GameRegistry.addRecipe(new ItemStack(Item.redstone, 8, 0), new Object[] { "2", Character.valueOf('2'), new ItemStack(TFCItems.OreChunk,1,27)});
 		GameRegistry.addRecipe(new ItemStack(TFCItems.Ink, 16, 0), new Object[] { "2", Character.valueOf('2'), new ItemStack(Item.dyePowder,1,0)});
@@ -362,8 +360,8 @@ public class Recipes
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.writabeBookTFC,1), new Object[]{new ItemStack(Item.book,1)});
 		GameRegistry.addRecipe(new ItemStack(TFCItems.Spindle,1), new Object[] { "P","#",Character.valueOf('P'),
-			new ItemStack(TFCItems.SpindleHead,1),Character.valueOf('#'),new ItemStack(Item.stick,1)});
-		GameRegistry.addRecipe(new ItemStack(TFCItems.ClaySpindle,1), new Object[] { "P","#",Character.valueOf('P'),
+			new ItemStack(TFCItems.SpindleHead,1, 1),Character.valueOf('#'),new ItemStack(Item.stick,1)});
+		GameRegistry.addRecipe(new ItemStack(TFCItems.SpindleHead,1,0), new Object[] { "P","#",Character.valueOf('P'),
 			new ItemStack(Item.clay,32767),Character.valueOf('#'),new ItemStack(Item.stick,1)});
 		GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.WoolYarn,8),new Object[]{new ItemStack(TFCItems.Wool,1,32767),new ItemStack(TFCItems.Spindle,1,32767)});
 		GameRegistry.addRecipe(new ItemStack(TFCItems.WoolCloth,1), new Object[]{"PP","PP",Character.valueOf('P'),new ItemStack(TFCItems.WoolYarn,1)});
@@ -554,6 +552,9 @@ public class Recipes
 		GameRegistry.addShapelessRecipe(new ItemStack(TFCItems.WeakRedSteelIngot, 1, 0), 
                 new Object[] {getStackNoTemp(new ItemStack(TFCItems.WeakRedSteelUnshaped, 1))});
 		
+		GameRegistry.addRecipe(new ItemStack(Item.clay,1,1), 
+				new Object[] {"PXP","XCX","PXP",Character.valueOf('P'),new ItemStack(TFCItems.Powder,1,1),Character.valueOf('X'),new ItemStack(TFCItems.Powder,1,2),Character.valueOf('C'),new ItemStack(Item.clay,1,0)});
+		
 		RegisterToolRecipes();
 		registerFoodRecipes();
 		VanillaRecipes();
@@ -614,6 +615,7 @@ public class Recipes
 			RemoveRecipe(new ItemStack(Block.torchWood,4));
 			RemoveRecipe(new ItemStack(Item.stick,4));
 			RemoveRecipe(new ItemStack(Block.planks,4));
+			RemoveRecipe(new ItemStack(Item.minecartCrate, 1));
 		}
 	}
 
@@ -1020,18 +1022,18 @@ public class Recipes
         }
         
         //clay molds
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldPick, 1), new Object[] { " ### ","#   #", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldPick, 1), new Object[] { "     "," ### ","#   #", "     ",Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldShovel, 1), new Object[] { " ### "," ### "," ### "," ### ","  #  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldHoe, 1), new Object[] { "#####","   ##", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldAxe, 1), new Object[] { " #   ","#### ","#####","#### "," # ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldHammer, 1), new Object[] { "#####","#####","  #  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldChisel, 1), new Object[] { "#","#","#","#","#", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldHoe, 1), new Object[] { "     ","#####","   ##","     ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldAxe, 1), new Object[] { " #   ","#### ","#####","#### "," #   ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldHammer, 1), new Object[] { "     ","#####","#####","  #  ","     ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldChisel, 1), new Object[] { "  #  ","  #  ","  #  ","  #  ","  #  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldSword, 1), new Object[] { "   ##","  ###"," ### "," ##  ","#    ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldMace, 1), new Object[] { "  #  "," ### "," ### "," ### ","  #  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldSaw, 1), new Object[] { "##   ","###  "," ### "," ####","   ##", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldProPick, 1), new Object[] { " ####","#   #","    #", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldScythe, 1), new Object[] { "#### "," ####","   ##", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
-        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldKnife, 1), new Object[] { " #","##","##","##","##", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldProPick, 1), new Object[] { "     "," ####","#   #","    #","     ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldScythe, 1), new Object[] { "     ","#### "," ####","   ##","     ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldKnife, 1), new Object[] { "  # "," ## "," ## "," ## "," ## ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.ClayMoldJavelin, 1), new Object[] { "###  ","#### ","#####"," ### ","  #  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         if (TFC_Settings.enableTFCArcheryRecipes)
         {
@@ -1093,23 +1095,29 @@ public class Recipes
         
         //Inverse Clay Knapping
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.CeramicMold, 2, 0), new Object[] { 
-        	"####",
-        	"#  #",
-        	"#  #",
-        	"#  #",
-        	"####", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        	"    ",
+        	" ## ",
+        	" ## ",
+        	" ## ",
+        	"    ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.PotteryJug, 1, 0), new Object[] { 
-        	" #   ",
-        	"#### ",
-        	"### #",
-        	"#### ",
-        	"###  ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        	"X XXX",
+        	"    X",
+        	"   X ",
+        	"    X",
+        	"   XX", Character.valueOf('X'), new ItemStack(TFCItems.FlatClay, 1, 1)});
         CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCItems.PotterySmallVessel, 1, 0), new Object[] { 
+        	"#   #",
+        	"     ",
+        	"     ",
+        	"     ",
+        	"#   #", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        CraftingManagerTFC.getInstance().addRecipe(new ItemStack(TFCBlocks.Crucible, 1), new Object[] { 
         	" ### ",
-        	"#####",
-        	"#####",
-        	"#####",
-        	" ### ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 1)});
+        	" ### ",
+        	" ### ",
+        	" ### ",
+        	"     ", Character.valueOf('#'), new ItemStack(TFCItems.FlatClay, 1, 3)});
 	}
 
 	private static void registerAlloys() {
@@ -2007,6 +2015,12 @@ public class Recipes
     					new ItemStack(TFCItems.CeramicMold,1,0),
     					0, 
     					new ItemStack(TFCItems.CeramicMold,1,1)));
+    	
+    	manager.addRecipe(
+    			new KilnRecipe(
+    					new ItemStack(TFCItems.SpindleHead,1,0),
+    					0, 
+    					new ItemStack(TFCItems.SpindleHead,1,1)));
     	
     	manager.addRecipe(
     			new KilnRecipe(
