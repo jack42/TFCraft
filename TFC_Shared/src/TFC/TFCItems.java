@@ -2304,13 +2304,8 @@ public class TFCItems
     	Fletching = new ItemTerra(TFC_Settings.getIntFor(config,"item","Fletching",num++)).setFolder("archery/").setUnlocalizedName("Fletsching");
     	CrackedArrow = new ItemTerra(TFC_Settings.getIntFor(config,"item","CrackedArrow",num++)).setFolder("archery/").setUnlocalizedName("Cracked Arrow");   	
     	
-    	TerraBow = new ItemCustomBow(TFC_Settings.getIntFor(config,"item","TerraBow",num++)).setUnlocalizedName("Terra Bow");
-    	
-    	Arrows = new Item[] {WoddenArrow, BoneArrow, StoneArrow, GlassArrow, TinArrow, BismuthArrow, ZincArrow, 
-    			CopperArrow, BronzeArrow, BismuthBronzeArrow, BlackBronzeArrow, RoseGoldArrow, WroughtIronArrow,
-    			SteelArrow, BlackSteelArrow, RedSteelArrow, BlueSteelArrow};
+    	TerraBow = new ItemCustomBow(TFC_Settings.getIntFor(config,"item","TerraBow",num++)).setUnlocalizedName("Terra Bow");   	
     }
     
     public static Item[] Meals;
-    public static Item[] Arrows;
 }

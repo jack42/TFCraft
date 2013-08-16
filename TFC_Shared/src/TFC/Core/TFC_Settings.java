@@ -5,6 +5,7 @@ import java.io.File;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.Property;
+import TFC.TFCItems;
 import TFC.TerraFirmaCraft;
 
 public class TFC_Settings 
@@ -19,9 +20,6 @@ public class TFC_Settings
 	public static boolean enableBetterGrass;
 	public static boolean enableInnerGrassFix;
 	public static boolean enableDebugMode;
-	
-	public static int SkeletonBowID;
-	public static int SkeletonArrowID;
 	
 	public static boolean enableCropsDie;
 
@@ -74,9 +72,6 @@ public class TFC_Settings
 		enableDebugMode = getBooleanFor(config,"General","enableDebugMode",false, "Set this to true if you want to turn on debug mode which is useful for bug hunting");
 		dayLength = getIntFor(config,"General","dayLength",24000, "This is how many ticks are in a minecraft day. 24000 is a standard MC cycle. Setting to 48000 will double the length of days.");
 		yearLength = getIntFor(config,"General","yearLength",96, "This is how many days are in a year. Keep this to multiples of 12.");
-		//Archery
-		SkeletonBowID = getIntFor(config, "Archery", "SkeletonBowID", Item.bow.itemID);
-		SkeletonArrowID = getIntFor(config, "Archery", "SkeletonArrowID", Item.arrow.itemID);
 		//Caveins
 		minimumRockLoad = getIntFor(config,"Cavein Options","minimumRockLoad",1, "This is the minimum number of solid blocks that must be over a section in order for it to collapse.");
 		initialCollapseRatio = getIntFor(config,"Cavein Options","initialCollapseRatio",40, "This number is a 1 in X chance that when you mine a block, a collapse will occur.");

@@ -93,7 +93,7 @@ public class EntitySkeletonTFC extends EntitySkeleton
 	@Override
 	protected int getDropItemId()
 	{
-		return TFC_Settings.SkeletonArrowID;
+		return TFCItems.BoneArrow.itemID;
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class EntitySkeletonTFC extends EntitySkeleton
 
 			for (var4 = 0; var4 < var3; ++var4)
 			{
-				this.dropItem(TFC_Settings.SkeletonArrowID, 1);
+				this.dropItem(TFCItems.BoneArrow.itemID, 1);
 			}
 		}
 
@@ -143,7 +143,7 @@ public class EntitySkeletonTFC extends EntitySkeleton
 	protected void addRandomArmor()
 	{
 		superAddRandomArmor();
-		this.setCurrentItemOrArmor(0, new ItemStack(Item.itemsList[TFC_Settings.SkeletonBowID]));
+		this.setCurrentItemOrArmor(0, new ItemStack(TFCItems.TerraBow.itemID, 1, 0));
 	}
 
 	public static Item getArmorItemForSlot(int par0, int par1)

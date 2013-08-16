@@ -2,8 +2,10 @@ package TFC.Items.Tools;
 
 import net.minecraft.item.EnumToolMaterial;
 import TFC.TFCItems;
+import TFC.API.ICausesDamage;
 import TFC.API.ISize;
 import TFC.API.TFCTabs;
+import TFC.API.Enums.EnumDamageType;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
 import TFC.Items.ItemTerra;
@@ -21,7 +23,7 @@ public class ItemArrow extends ItemTerra implements ISize {
         this.setFolder("archery/");
 		this.setCreativeTab(TFCTabs.TFCTools);
 		this.damage = damage*0.55;
-		this.headBreackChange = 1.025-Math.sqrt(Math.sqrt(maxUses/TFCItems.RedSteelUses));
+		this.headBreackChange = 1.025-Math.sqrt(Math.sqrt(Math.sqrt((double)maxUses/TFCItems.RedSteelUses)));
 		this.arrowBreakChage = arrowBreakChange;
 		this.headId = headId;
 	}

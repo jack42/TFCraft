@@ -2,6 +2,7 @@ package TFC.Entities;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -9,6 +10,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -17,9 +19,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import TFC.TFCItems;
 import TFC.API.ICausesDamage;
 import TFC.API.Enums.EnumDamageType;
-import TFC.Core.TFC_Settings;
+import TFC.Items.Tools.ItemArrow;
 
 public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
 {
@@ -29,7 +32,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
     private int inTile = 0;
     private int inData = 0;
     private boolean inGround = false;
-    private int itemId = TFC_Settings.SkeletonArrowID;
+    private int arrowItemId = TFCItems.StoneArrow.itemID;
 
     /** 1 if the player can pick up the arrow */
     public int canBePickedUp = 0;
@@ -50,49 +53,11 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         this.setDamage(65.0);
     }
 
-    public EntityAdvancedArrowTFC(World par1World, double par2, double par4, double par6)
-    {
-        this(par1World);
-        this.setSize(0.5F, 0.5F);
-        this.setPosition(par2, par4, par6);
-        this.yOffset = 0.0F;
-    }
-
-    public EntityAdvancedArrowTFC(World par1World, EntityLivingBase par2EntityLiving, EntityLiving par3EntityLiving, float par4, float par5, int itemId)
-    {
-        this(par1World);
-        this.shootingEntity = par2EntityLiving;
-        this.itemId = itemId;
-        
-        if (par2EntityLiving instanceof EntityPlayer)
-        {
-            this.canBePickedUp = 1;
-        }
-
-        this.posY = par2EntityLiving.posY + par2EntityLiving.getEyeHeight() - 0.10000000149011612D;
-        double var6 = par3EntityLiving.posX - par2EntityLiving.posX;
-        double var8 = par3EntityLiving.posY + par3EntityLiving.getEyeHeight() - 0.699999988079071D - this.posY;
-        double var10 = par3EntityLiving.posZ - par2EntityLiving.posZ;
-        double var12 = MathHelper.sqrt_double(var6 * var6 + var10 * var10);
-
-        if (var12 >= 1.0E-7D)
-        {
-            float var14 = (float)(Math.atan2(var10, var6) * 180.0D / Math.PI) - 90.0F;
-            float var15 = (float)(-(Math.atan2(var8, var12) * 180.0D / Math.PI));
-            double var16 = var6 / var12;
-            double var18 = var10 / var12;
-            this.setLocationAndAngles(par2EntityLiving.posX + var16, this.posY, par2EntityLiving.posZ + var18, var14, var15);
-            this.yOffset = 0.0F;
-            float var20 = (float)var12 * 0.2F;
-            this.setThrowableHeading(var6, var8 + var20, var10, par4, par5);
-        }
-    }
-
     public EntityAdvancedArrowTFC(World par1World, EntityLivingBase par2EntityLiving, float par3, int itemId)
     {
         this(par1World);
         this.shootingEntity = par2EntityLiving;
-        this.itemId = itemId;
+        this.arrowItemId = itemId;
         
         if (par2EntityLiving instanceof EntityPlayer)
         {
@@ -111,7 +76,6 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         this.motionY = (-MathHelper.sin(this.rotationPitch / 180.0F * (float)Math.PI));
         this.setThrowableHeading(this.motionX, this.motionY, this.motionZ, par3 * 1.5F, 1.0F);
     }
-
 
     /**
      * Called to update the entity's position/logic.
@@ -266,7 +230,10 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
                         }
 
                         this.worldObj.playSoundAtEntity(this, "random.bowhit", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
-                        this.setDead();
+                        //this.setDead();
+                        this.motionX /= 5;
+                        this.motionY /= 5;
+                        this.motionZ /= 5;
                     }
                     else
                     {
@@ -365,7 +332,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
 	public void writeEntityToNBT(NBTTagCompound nbt)
     {
     	super.writeEntityToNBT(nbt);
-    	nbt.setInteger("itemId", this.itemId);
+    	nbt.setInteger("itemId", this.arrowItemId);
     }
 
     /**
@@ -375,10 +342,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
 	public void readEntityFromNBT(NBTTagCompound nbt)
     {
     	super.readEntityFromNBT(nbt);
-    	if (nbt.hasKey("itemId")) 
-    	{
-    		this.itemId = nbt.getInteger("itemId");
-    	}
+   		this.arrowItemId = nbt.getInteger("itemId");
     }
 
     /**
@@ -391,7 +355,7 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         {
             boolean var2 = this.canBePickedUp == 1 || this.canBePickedUp == 2 && par1EntityPlayer.capabilities.isCreativeMode;
 
-            if (this.canBePickedUp == 1 && !par1EntityPlayer.inventory.addItemStackToInventory(new ItemStack(itemId, 1, 0)))
+            if (this.canBePickedUp == 1 && !pickUpByPlayer(par1EntityPlayer))
             {
                 var2 = false;
             }
@@ -405,6 +369,24 @@ public class EntityAdvancedArrowTFC extends EntityArrow implements ICausesDamage
         }
     }
 
+    private boolean pickUpByPlayer(EntityPlayer entityPlayer)
+    {
+    	Random random = new Random();
+    	boolean ret1 = false;
+    	boolean ret2 = false;
+    	if (random.nextDouble() < ((ItemArrow)Item.itemsList[arrowItemId]).getHeadBreakChange())
+    	{
+    		ret1 = entityPlayer.inventory.addItemStackToInventory(new ItemStack(TFCItems.CrackedArrow, 1));
+    	} else if (random.nextDouble() < ((ItemArrow)Item.itemsList[arrowItemId]).getArrowBreakChange())
+    	{
+    		ret1 = entityPlayer.inventory.addItemStackToInventory(new ItemStack(TFCItems.CrackedArrow, 1));
+    		ret2 = entityPlayer.inventory.addItemStackToInventory(new ItemStack(((ItemArrow)Item.itemsList[arrowItemId]).getHeadId(), 1, 0));
+    	} else {
+    		ret1 = entityPlayer.inventory.addItemStackToInventory( new ItemStack(arrowItemId, 1, 0));
+    	};
+    	return ret1 || ret2;
+    }
+    
 	@Override
 	public EnumDamageType GetDamageType() {
 		return EnumDamageType.PIERCING;

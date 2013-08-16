@@ -17,6 +17,7 @@ import TFC.API.ISize;
 import TFC.API.TFCTabs;
 import TFC.API.Enums.EnumSize;
 import TFC.API.Enums.EnumWeight;
+import TFC.Core.TFC_Settings;
 import TFC.Entities.EntityAdvancedArrowTFC;
 import TFC.Items.ItemTerra;
 import cpw.mods.fml.relauncher.Side;
@@ -69,6 +70,10 @@ public class ItemCustomBow extends ItemTerra implements ISize
                 f = 1.0F;
             }
 
+            if (flag)
+            {
+            	arrowId = TFCItems.RedSteelArrow.itemID;
+            }
             EntityAdvancedArrowTFC entityarrow = new EntityAdvancedArrowTFC(par2World, par3EntityPlayer, f * 2.0F, arrowId);
 
             if (f == 1.0F)
@@ -187,7 +192,6 @@ public class ItemCustomBow extends ItemTerra implements ISize
 		return EnumSize.LARGE;
 	}
 
-
 	@Override
 	public EnumWeight getWeight() {
 		return EnumWeight.LIGHT;
@@ -205,13 +209,10 @@ public class ItemCustomBow extends ItemTerra implements ISize
             if (inventory.mainInventory[j] != null)
             {
             	int id = inventory.mainInventory[j].itemID;
-            	for (int i = 0; i < TFCItems.Arrows.length; i++)
-            	{
-            		if (TFCItems.Arrows[i].itemID == id)
-            		{
-            			return id;
-            		}
-            	}
+           		if (inventory.mainInventory[j].getItem() instanceof ItemArrow)
+           		{
+           			return id;
+           		}
             }
         }
         return -1;
